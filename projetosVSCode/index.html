@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./styles.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital@1&family=Poppins:wght@600&display=swap"
+        rel="stylesheet">
+    <title>Missão Programação do Zero</title>
+</head>
+
+<body>
+    <img src="./missao.png">
+    <div id="caixa-numeros">
+        <span class="numeros" id="horas">00</span>
+        <span class="numeros">:</span>
+        <span class="numeros" id="minutos">00</span>
+        <span class="numeros">:</span>
+        <span class="numeros" id="segundos">00</span>
+        <span class="numeros">:</span>
+        <span class="numeros numero-verde" id="miliseg">00</span>
+    </div>
+    <div id="caixa-botoes">
+        <button class="botoes" id="iniciar">Iniciar</button>
+        <button class="botoes" id="parar">Parar</button>
+        <button class="botoes" id="resetar">Resetar</button>
+    </div>
+</body>
+<script>
+    let btnIniciar = document.getElementById("iniciar")
+    let btnParar = document.getElementById("parar")
+    let btnResetar = document.getElementById("resetar")
+    let miliseg = document.getElementById("miliseg")
+    let segundos = document.getElementById("segundos")
+    let minutos = document.getElementById("minutos")
+    let horas = document.getElementById("horas")
+
+    let iniciarCronometro
+    let ms = "00"
+    let seg = "00"
+    let min = "00"
+    let hr = "00"
+
+
+    function iniciar() {
+        iniciarCronometro = setInterval(function () {
+            ms++
+
+            if(ms < 10){
+                ms = "0" + ms
+            }
+
+            if(ms == 100){
+               seg++
+
+               if(seg < 10){
+                   seg = "0" + seg
+                }
+               ms = 0
+            }
+
+            if(seg == 60){
+                min++
+
+                if(min < 10){
+                    min = "0" + min
+                }
+                seg = 0
+            }
+
+            if(min == 60){
+               hr++
+
+               if(hr < 10){
+                hr = "0" + hr
+               }
+               min = 0
+            }
+
+            btnIniciar.classList.add("ativo")
+            btnParar.classList.remove("ativo")
+           
+            atualizaValor()        
+        },10);
+    }
+    function parar(){
+        clearInterval(iniciarCronometro)
+
+            btnParar.classList.add("ativo")
+            btnIniciar.classList.remove("ativo")
+    }
+
+    function resetar(){
+        clearInterval(iniciarCronometro)
+        ms = "00"
+        seg = "00"
+        min = "00"
+        hr = "00"
+        atualizaValor()
+
+        btnIniciar.classList.remove("ativo")
+        btnParar.classList.remove("ativo")
+    }
+
+
+
+    function atualizaValor(){
+        miliseg.innerHTML = ms
+        segundos.innerHTML = seg
+        minutos.innerHTML = min
+        horas.innerHTML = hr
+    }
+
+    btnIniciar.addEventListener("click", iniciar)
+    btnParar.addEventListener("click", parar)
+    btnResetar.addEventListener("click", resetar)
+
+</script>
+</html>
